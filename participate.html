@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Participate – WWV</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #000000, #1a1a1a);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      max-width: 500px;
+      width: 100%;
+    }
+    input, textarea, label {
+      font-size: 1rem;
+      padding: 0.6em;
+      border-radius: 5px;
+      border: none;
+    }
+    input[type="checkbox"] {
+      width: auto;
+    }
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    button {
+      background-color: #b31942;
+      color: white;
+      border: none;
+      padding: 0.8em 1.5em;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #8e1635;
+    }
+    a {
+      color: #aaa;
+      margin-top: 2rem;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Participate in World Wide Vulva</h1>
+  <form action="https://formsubmit.co/project.wwv@gmail.com" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_subject" value="Neue WWV-Einreichung">
+
+    <label for="nickname">Name / Nickname (optional)</label>
+    <input type="text" name="nickname" id="nickname" />
+
+    <label for="age">Age (optional)</label>
+    <input type="number" name="age" id="age" min="18" max="120" />
+
+    <label for="country">Country (optional)</label>
+    <input type="text" name="country" id="country" />
+
+    <label for="message">Thoughts or message (optional)</label>
+    <textarea name="message" id="message" rows="4"></textarea>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="over18" name="over18" required />
+      <label for="over18">I confirm that I am 18 or older</label>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="consent" name="consent" required />
+      <label for="consent">I agree to the use of my photo as part of the WWV mosaic</label>
+    </div>
+
+    <label for="images">Upload up to 3 images</label>
+    <input type="file" name="images" accept="image/*" multiple required />
+
+    <button type="submit">Submit</button>
+  </form>
+  <a href="index.html">← Back to homepage</a>
+</body>
+</html>
