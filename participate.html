@@ -2,15 +2,15 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mitmachen – World Wide Vulva</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mitmachen – WWV</title>
   <style>
     body {
       background-color: #111;
       color: #fff;
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 1em;
+      padding: 2rem;
       text-align: center;
     }
     form {
@@ -40,18 +40,19 @@
   </style>
 </head>
 <body>
-  <h1>Mitmachen</h1>
-  <p>Teile deine Vulva für das WWV-Mosaik. Alle Einsendungen sind anonym.</p>
+  <h1>Mitmachen beim WWV</h1>
+  <p>Teile deine Vulva anonym für das Mosaik.</p>
 
-  <form method="POST" enctype="multipart/form-data" action="https://script.google.com/macros/s/AKfycbwOU-Z30OkI3H1LIGEAitgt4Q5Gnp-pth46NrEs8s_bv_Bx3iW7PQ1-CTgJG-DWJzTK/exec">
-    <input type="text" name="Name" placeholder="Name (optional)" />
+  <form method="POST" action="https://script.google.com/macros/s/AKfycbwOU-Z30OkI3H1LIGEAitgt4Q5Gnp-pth46NrEs8s_bv_Bx3iW7PQ1-CTgJG-DWJzTK/exec" enctype="multipart/form-data">
+    <input type="text" name="Name" placeholder="Dein Name (optional)" />
     <input type="text" name="Age" placeholder="Alter (optional)" />
     <input type="text" name="Country" placeholder="Land (optional)" />
-    <textarea name="Message" placeholder="Nachricht (optional)"></textarea>
-    
+    <textarea name="Message" placeholder="Begleittext oder Gedanken (optional)"></textarea>
+
     <p>Bis zu 3 Bilder hochladen:</p>
     <input type="file" name="photos" accept="image/*" multiple required />
-    
+
+    <br>
     <button type="submit">Absenden</button>
   </form>
 </body>
