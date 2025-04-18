@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>WWV-Mosaik</title>
+  <script src="https://openseadragon.github.io/openseadragon/openseadragon.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+    }
+    #openseadragon {
+      width: 100vw;
+      height: 100vh;
+    }
+    #preview {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      max-height: 40vh;
+      background-color: rgba(0, 0, 0, 0.95);
+      padding: 10px;
+      border-radius: 10px 10px 0 0;
+      display: none;
+      z-index: 10000;
+      text-align: center;
+    }
+    #preview img {
+      max-height: 100%;
+      max-width: 100%;
+      height: auto;
+      width: auto;
+      display: block;
+      margin: 0 auto;
+      border-radius: 4px;
+    }
+    #preview button {
+      margin-top: 6px;
+      padding: 6px 12px;
+      font-size: 16px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    #preview-path {
+      color: white;
+      font-size: 14px;
+      display: block;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="openseadragon"></div>
+
+<div id="preview">
+  <img id="preview-img" src="" alt="Vorschau"><br>
+  <span id="preview-path"></span>
+  <button onclick="document.getElementById('preview').style.display='none'">Schließen</button>
+</div>
+
+<script>
+  const TILE_SIZE = 100;
+  let tileMapping = {};
+
+  // Mapping laden
+  fetch("tile_mapping.json")
+    .then(response => response.json())
+    .then(data => {
+      tileMapping = data;
+    });
+
+  const viewer = OpenSeadragon({
+    id: "openseadragon",
+    prefixUrl: "https://openseadragon.github.io/openseadragon/images/",
+    tileSources: "output.dzi"
+  });
+
+  viewer.addHandler("canvas-click", function (event) {
+    const webPoint = event.position;
+    const viewportPoint = viewer.viewport.pointFromPixel(webPoint);
+    const imagePoint = viewer.viewport.viewportToImageCoordinates(viewportPoint);
+
+    const col = Math.floor(imagePoint.x / TILE_SIZE);
+    const row = Math.floor(imagePoint.y / TILE_SIZE);
+    const tilesPerRow = Math.floor(viewer.source.dimensions.x / TILE_SIZE);
+    const index = row * tilesPerRow + col;
+
+    const filename = tileMapping[index];
+    if (!filename) {
+      alert("Kein Originalbild vorhanden.");
+      return;
+    }
+
+    const imgPath = `tiles/${filename}`;
+    document.getElementById("preview-img").src = imgPath;
+    document.getElementById("preview-path").textContent = imgPath;
+    document.getElementById("preview").style.display = "block";
+  });
+</script>
+
+</body>
+</html>
