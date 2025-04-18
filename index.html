@@ -40,6 +40,34 @@
     .button:hover {
       background-color: #8e1635;
     }
+    form {
+      margin-top: 3em;
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      max-width: 400px;
+      width: 100%;
+    }
+    input, textarea, select, label {
+      font-size: 1rem;
+      padding: 0.6em;
+      border-radius: 5px;
+      border: none;
+    }
+    input[type="checkbox"] {
+      width: auto;
+    }
+    label {
+      text-align: left;
+      display: block;
+      margin-bottom: 0.2em;
+    }
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      justify-content: flex-start;
+    }
     footer {
       margin-top: 4em;
       font-size: 0.9rem;
@@ -52,9 +80,36 @@
   <p>
     Ein globales Kunstprojekt zur Sichtbarkeit, Vielfalt und Würde des weiblichen Körpers – real, anonym, selbstbestimmt. <br>
     Das WWV-Mosaik wird aus echten Bildern zusammengesetzt – jede Vulva ist Kunst.
-  </p>
-  <a href="viewer.html" class="button">Zum Mosaik</a>
-  <footer>
+  </p><a href="viewer.html" class="button">Zum Mosaik</a>
+
+  <form action="https://formsubmit.co/project.wwv@gmail.com" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_subject" value="Neue WWV-Einreichung">
+    <label for="nickname">Name / Nickname (optional)</label>
+    <input type="text" name="nickname" id="nickname" /><label for="age">Alter (optional)</label>
+<input type="number" name="age" id="age" min="18" max="120" />
+
+<label for="country">Land (optional)</label>
+<input type="text" name="country" id="country" />
+
+<label for="message">Gedanken oder Begleittext (optional)</label>
+<textarea name="message" id="message" rows="4"></textarea>
+
+<div class="checkbox-group">
+  <input type="checkbox" id="over18" name="over18" required />
+  <label for="over18">Ich bin mindestens 18 Jahre alt</label>
+</div>
+
+<div class="checkbox-group">
+  <input type="checkbox" id="consent" name="consent" required />
+  <label for="consent">Ich bin mit der Verwendung meines Bildes im Rahmen des WWV-Mosaiks einverstanden</label>
+</div>
+
+<label for="images">Bild-Upload (bis zu 3 Bilder)</label>
+<input type="file" name="images" accept="image/*" multiple required />
+
+<button type="submit" class="button">Einreichen</button>
+
+  </form>  <footer>
     &copy; 2025 Projekt WWV. Alle Rechte vorbehalten.
   </footer>
 </body>
