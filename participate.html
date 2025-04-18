@@ -3,95 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Participate – WWV</title>
+  <title>Mitmachen – World Wide Vulva</title>
   <style>
     body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #000000, #1a1a1a);
+      background-color: #111;
       color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem;
-    }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 1em;
+      text-align: center;
     }
     form {
-      display: flex;
-      flex-direction: column;
-      gap: 1em;
       max-width: 500px;
+      margin: 0 auto;
+      background: #222;
+      padding: 1.5em;
+      border-radius: 10px;
+    }
+    input, textarea {
       width: 100%;
-    }
-    input, textarea, label {
-      font-size: 1rem;
-      padding: 0.6em;
-      border-radius: 5px;
+      margin: 0.5em 0;
+      padding: 0.7em;
       border: none;
-    }
-    input[type="checkbox"] {
-      width: auto;
-    }
-    .checkbox-group {
-      display: flex;
-      align-items: center;
-      gap: 0.5em;
+      border-radius: 5px;
+      font-size: 1em;
     }
     button {
-      background-color: #b31942;
+      background-color: #a52a3a;
       color: white;
       border: none;
-      padding: 0.8em 1.5em;
-      font-size: 1rem;
-      border-radius: 8px;
+      padding: 0.8em 1.2em;
+      border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #8e1635;
-    }
-    a {
-      color: #aaa;
-      margin-top: 2rem;
-      text-decoration: none;
+      font-size: 1em;
     }
   </style>
 </head>
 <body>
-  <h1>Participate in World Wide Vulva</h1>
-  <form action="https://formsubmit.co/9d12f339409125683c044e97ace01391" method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="_subject" value="Neue WWV-Einreichung">
+  <h1>Mitmachen</h1>
+  <p>Teile deine Vulva für das WWV-Mosaik. Alle Einsendungen sind anonym.</p>
 
-    <label for="nickname">Name / Nickname (optional)</label>
-    <input type="text" name="nickname" id="nickname" />
-
-    <label for="age">Age (optional)</label>
-    <input type="number" name="age" id="age" min="18" max="120" />
-
-    <label for="country">Country (optional)</label>
-    <input type="text" name="country" id="country" />
-
-    <label for="message">Thoughts or message (optional)</label>
-    <textarea name="message" id="message" rows="4"></textarea>
-
-    <div class="checkbox-group">
-      <input type="checkbox" id="over18" name="over18" required />
-      <label for="over18">I confirm that I am 18 or older</label>
-    </div>
-
-    <div class="checkbox-group">
-      <input type="checkbox" id="consent" name="consent" required />
-      <label for="consent">I agree to the use of my photo as part of the WWV mosaic</label>
-    </div>
-
-    <label for="images">Upload up to 3 images</label>
-    <input type="file" name="images" accept="image/*" multiple required />
-
-    <button type="submit">Submit</button>
+  <form method="POST" enctype="multipart/form-data" action="https://script.google.com/macros/s/AKfycbwOU-Z30OkI3H1LIGEAitgt4Q5Gnp-pth46NrEs8s_bv_Bx3iW7PQ1-CTgJG-DWJzTK/exec">
+    <input type="text" name="Name" placeholder="Name (optional)" />
+    <input type="text" name="Age" placeholder="Alter (optional)" />
+    <input type="text" name="Country" placeholder="Land (optional)" />
+    <textarea name="Message" placeholder="Nachricht (optional)"></textarea>
+    
+    <p>Bis zu 3 Bilder hochladen:</p>
+    <input type="file" name="photos" accept="image/*" multiple required />
+    
+    <button type="submit">Absenden</button>
   </form>
-  <a href="index.html">← Back to homepage</a>
 </body>
 </html>
