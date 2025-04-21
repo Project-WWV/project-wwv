@@ -36,6 +36,30 @@
       color: #ccc;
     }
 
+    .thumb-row {
+      margin-top: 2em;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding-bottom: 1em;
+    }
+
+    .thumb-row .gallery-item {
+      display: inline-block;
+      width: 120px;
+      height: 120px;
+      margin-right: 10px;
+      background: #222;
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .thumb-row .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
     .gallery {
       display: flex;
       flex-wrap: wrap;
@@ -71,22 +95,23 @@
       <p><strong>Country:</strong> –</p>
       <p><strong>Message:</strong> –</p>
     </div>
+    <div class="thumb-row" id="thumbRow"></div>
   </div>
 
   <div class="gallery" id="gallery"></div>
 
   <script>
+    const totalImages = 150; // ggf. anpassen
     const gallery = document.getElementById("gallery");
+    const thumbRow = document.getElementById("thumbRow");
     const previewBox = document.getElementById("previewBox");
     const previewImage = document.getElementById("previewImage");
 
-    const totalImages = 150; // ggf. anpassen
-
-    for (let i = 0; i < totalImages; i++) {
+    function createGalleryItem(i) {
       const img = new Image();
       img.src = `tiles/tile_${i}.jpg`;
       img.alt = `tile_${i}`;
-      img.onerror = () => img.parentElement.remove();
+      img.onerror = () => wrapper.remove();
 
       const wrapper = document.createElement("div");
       wrapper.className = "gallery-item";
@@ -95,8 +120,6 @@
       wrapper.onclick = () => {
         previewBox.style.display = "block";
         previewImage.src = img.src;
-
-        // Platzhalter anzeigen (kann später durch JSON ersetzt werden)
         previewBox.querySelector(".info").innerHTML = `
           <p><strong>Name:</strong> –</p>
           <p><strong>Age:</strong> –</p>
@@ -105,7 +128,15 @@
         `;
       };
 
-      gallery.appendChild(wrapper);
+      return wrapper;
+    }
+
+    for (let i = 0; i < totalImages; i++) {
+      const item = createGalleryItem(i);
+      gallery.appendChild(item);
+
+      const thumb = createGalleryItem(i);
+      thumbRow.appendChild(thumb);
     }
   </script>
 
