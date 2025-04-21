@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Galerie – World Wide Vulva</title>
+  <title>Galerie – WWV</title>
   <style>
     body {
-      margin: 0;
-      font-family: sans-serif;
       background-color: black;
       color: white;
-      text-align: center;
+      font-family: sans-serif;
+      margin: 0;
       padding: 2em;
+      text-align: center;
     }
 
     h1 {
-      font-size: 2.5em;
+      font-size: 2em;
       margin-bottom: 1em;
     }
 
@@ -23,15 +23,15 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 1em;
+      gap: 10px;
     }
 
     .gallery-item {
-      width: 150px;
-      height: 150px;
-      background-color: #333;
+      width: 120px;
+      height: 120px;
+      background: #222;
+      border-radius: 6px;
       overflow: hidden;
-      border-radius: 5px;
     }
 
     .gallery-item img {
@@ -40,6 +40,7 @@
       object-fit: cover;
     }
 
+    /* Menü-Stil wie auf anderen Seiten */
     .menu-button {
       position: absolute;
       top: 1em;
@@ -114,9 +115,7 @@
 <body>
 
   <button class="menu-button" onclick="toggleMenu()">
-    <span></span>
-    <span></span>
-    <span></span>
+    <span></span><span></span><span></span>
   </button>
 
   <div class="menu-overlay-wrapper" id="menuWrapper" onclick="closeMenu()">
@@ -130,13 +129,7 @@
   </div>
 
   <h1>Galerie</h1>
-  <div class="gallery">
-    <!-- Beispielbilder -->
-    <div class="gallery-item"><img src="tiles/tile_001.jpg" alt="Bild 1"></div>
-    <div class="gallery-item"><img src="tiles/tile_002.jpg" alt="Bild 2"></div>
-    <div class="gallery-item"><img src="tiles/tile_003.jpg" alt="Bild 3"></div>
-    <!-- Weitere Einträge folgen oder per JS automatisieren -->
-  </div>
+  <div class="gallery" id="gallery"></div>
 
   <script>
     function toggleMenu() {
@@ -146,6 +139,22 @@
     function closeMenu() {
       document.getElementById('menuWrapper').classList.remove('open');
     }
+
+    const gallery = document.getElementById("gallery");
+    const totalImages = 150; // <-- hier anpassen, je nach tatsächlicher Anzahl
+
+    for (let i = 0; i < totalImages; i++) {
+      const img = new Image();
+      img.src = `tiles/tile_${i}.jpg`;
+      img.alt = `tile_${i}`;
+      img.onerror = () => img.parentElement.remove(); // entfernt Platzhalter, wenn Bild fehlt
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "gallery-item";
+      wrapper.appendChild(img);
+      gallery.appendChild(wrapper);
+    }
   </script>
+
 </body>
 </html>
