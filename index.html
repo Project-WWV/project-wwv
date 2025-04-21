@@ -70,6 +70,10 @@
       box-shadow: -2px 0 5px rgba(0,0,0,0.5);
     }
 
+    .menu-overlay.open {
+      display: block;
+    }
+
     .menu-overlay a {
       display: block;
       padding: 1em;
@@ -82,8 +86,15 @@
       background-color: #6a0f0f;
     }
 
-    .menu-overlay.open {
-      display: block;
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -96,6 +107,7 @@
   </button>
 
   <div class="menu-overlay" id="menu">
+    <button class="close-btn" onclick="toggleMenu()">×</button>
     <a href="index.html">Homepage</a>
     <a href="gallery.html">Galerie</a>
     <a href="viewer.html">Mosaik</a>
@@ -113,8 +125,7 @@
 
   <script>
     function toggleMenu() {
-      const menu = document.getElementById('menu');
-      menu.classList.toggle('open');
+      document.getElementById('menu').classList.toggle('open');
     }
   </script>
 </body>
