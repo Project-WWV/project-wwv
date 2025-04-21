@@ -1,106 +1,128 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>WWV-Mosaik</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WWV Mosaik</title>
   <script src="https://openseadragon.github.io/openseadragon/openseadragon.min.js"></script>
   <style>
     body {
       margin: 0;
+      font-family: sans-serif;
       background-color: black;
+      color: white;
     }
+
     #openseadragon {
       width: 100vw;
       height: 100vh;
     }
-    #preview {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      max-height: 40vh;
-      background-color: rgba(0, 0, 0, 0.95);
-      padding: 10px;
-      border-radius: 10px 10px 0 0;
-      display: none;
-      z-index: 10000;
-      text-align: center;
-    }
-    #preview img {
-      max-height: 100%;
-      max-width: 100%;
-      height: auto;
-      width: auto;
-      display: block;
-      margin: 0 auto;
-      border-radius: 4px;
-    }
-    #preview button {
-      margin-top: 6px;
-      padding: 6px 12px;
-      font-size: 16px;
-      background-color: #333;
-      color: white;
+
+    .menu-button {
+      position: absolute;
+      top: 1em;
+      right: 1em;
+      width: 40px;
+      height: 40px;
+      background-color: #6a0f0f;
       border: none;
       border-radius: 5px;
+      cursor: pointer;
+      z-index: 20;
     }
-    #preview-path {
-      color: white;
-      font-size: 14px;
+
+    .menu-button span {
       display: block;
-      margin-top: 5px;
+      width: 22px;
+      height: 3px;
+      margin: 5px auto;
+      background-color: white;
+    }
+
+    .menu-overlay-wrapper {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 15;
+    }
+
+    .menu-overlay-wrapper.open {
+      display: block;
+    }
+
+    .menu-overlay {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 100%;
+      background-color: #111;
+      padding-top: 60px;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    }
+
+    .menu-overlay a {
+      display: block;
+      padding: 1em;
+      color: white;
+      text-decoration: none;
+      border-bottom: 1px solid #333;
+    }
+
+    .menu-overlay a:hover {
+      background-color: #6a0f0f;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-<div id="openseadragon"></div>
+  <button class="menu-button" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 
-<div id="preview">
-  <img id="preview-img" src="" alt="Vorschau"><br>
-  <span id="preview-path"></span>
-  <button onclick="document.getElementById('preview').style.display='none'">Schließen</button>
-</div>
+  <div class="menu-overlay-wrapper" id="menuWrapper" onclick="closeMenu()">
+    <div class="menu-overlay" onclick="event.stopPropagation();">
+      <button class="close-btn" onclick="toggleMenu()">×</button>
+      <a href="index.html">Homepage</a>
+      <a href="gallery.html">Galerie</a>
+      <a href="viewer.html">Mosaik</a>
+      <a href="participate.html">Mitmachen</a>
+    </div>
+  </div>
 
-<script>
-  const TILE_SIZE = 100;
-  let tileMapping = {};
+  <div id="openseadragon"></div>
 
-  // Mapping laden
-  fetch("tile_mapping.json")
-    .then(response => response.json())
-    .then(data => {
-      tileMapping = data;
-    });
-
-  const viewer = OpenSeadragon({
-    id: "openseadragon",
-    prefixUrl: "https://openseadragon.github.io/openseadragon/images/",
-    tileSources: "output.dzi"
-  });
-
-  viewer.addHandler("canvas-click", function (event) {
-    const webPoint = event.position;
-    const viewportPoint = viewer.viewport.pointFromPixel(webPoint);
-    const imagePoint = viewer.viewport.viewportToImageCoordinates(viewportPoint);
-
-    const col = Math.floor(imagePoint.x / TILE_SIZE);
-    const row = Math.floor(imagePoint.y / TILE_SIZE);
-    const tilesPerRow = Math.floor(viewer.source.dimensions.x / TILE_SIZE);
-    const index = row * tilesPerRow + col;
-
-    const filename = tileMapping[index];
-    if (!filename) {
-      alert("Kein Originalbild vorhanden.");
-      return;
+  <script>
+    function toggleMenu() {
+      document.getElementById('menuWrapper').classList.toggle('open');
     }
 
-    const imgPath = `tiles/${filename}`;
-    document.getElementById("preview-img").src = imgPath;
-    document.getElementById("preview-path").textContent = imgPath;
-    document.getElementById("preview").style.display = "block";
-  });
-</script>
+    function closeMenu() {
+      document.getElementById('menuWrapper').classList.remove('open');
+    }
 
+    OpenSeadragon({
+      id: "openseadragon",
+      prefixUrl: "https://openseadragon.github.io/openseadragon/images/",
+      tileSources: "output.dzi"
+    });
+  </script>
 </body>
 </html>
