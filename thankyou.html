@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Danke – WWV</title>
   <style>
     body {
-      background-color: #111;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background-color: black;
+      color: white;
       text-align: center;
-      padding: 2rem;
+      padding-top: 5em;
     }
+
     h1 {
       font-size: 2.2rem;
-      margin-bottom: 1rem;
       color: #f06;
     }
+
     p {
       font-size: 1.1rem;
       max-width: 500px;
-      margin-bottom: 2rem;
+      margin: 1em auto 2em auto;
     }
+
     a.button {
       background-color: #b01b2e;
       color: white;
@@ -36,17 +35,115 @@
       font-size: 1rem;
       transition: background-color 0.3s;
     }
+
     a.button:hover {
       background-color: #8c1626;
+    }
+
+    .menu-button {
+      position: absolute;
+      top: 1em;
+      right: 1em;
+      width: 40px;
+      height: 40px;
+      background-color: #6a0f0f;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 20;
+    }
+
+    .menu-button span {
+      display: block;
+      width: 22px;
+      height: 3px;
+      margin: 5px auto;
+      background-color: white;
+    }
+
+    .menu-overlay-wrapper {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 15;
+    }
+
+    .menu-overlay-wrapper.open {
+      display: block;
+    }
+
+    .menu-overlay {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 100%;
+      background-color: #111;
+      padding-top: 60px;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    }
+
+    .menu-overlay a {
+      display: block;
+      padding: 1em;
+      color: white;
+      text-decoration: none;
+      border-bottom: 1px solid #333;
+    }
+
+    .menu-overlay a:hover {
+      background-color: #6a0f0f;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
+
+  <button class="menu-button" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="menu-overlay-wrapper" id="menuWrapper" onclick="closeMenu()">
+    <div class="menu-overlay" onclick="event.stopPropagation();">
+      <button class="close-btn" onclick="toggleMenu()">×</button>
+      <a href="index.html">Homepage</a>
+      <a href="gallery.html">Galerie</a>
+      <a href="viewer.html">Mosaik</a>
+      <a href="participate.html">Mitmachen</a>
+    </div>
+  </div>
+
   <h1>Vielen Dank!</h1>
   <p>
-    Deine Einsendung wurde erfolgreich übermittelt.  
-    Du bist ein Teil des World Wide Vulva Projekts!
+    Deine Einsendung wurde erfolgreich übermittelt.<br>
+    Du bist jetzt Teil des World Wide Vulva Projekts!
   </p>
   <a href="index.html" class="button">Zurück zur Startseite</a>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('menuWrapper').classList.toggle('open');
+    }
+
+    function closeMenu() {
+      document.getElementById('menuWrapper').classList.remove('open');
+    }
+  </script>
 </body>
 </html>
