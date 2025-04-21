@@ -6,78 +6,146 @@
   <title>Galerie – World Wide Vulva</title>
   <style>
     body {
-      background-color: #111;
-      color: white;
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 20px;
-    }
-    h1 {
+      font-family: sans-serif;
+      background-color: black;
+      color: white;
       text-align: center;
-      color: #d22;
+      padding: 2em;
     }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 1em;
+    }
+
     .gallery {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
+      gap: 1em;
     }
-    .gallery img {
-      width: 120px;
-      height: 120px;
+
+    .gallery-item {
+      width: 150px;
+      height: 150px;
+      background-color: #333;
+      overflow: hidden;
+      border-radius: 5px;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border-radius: 6px;
+    }
+
+    .menu-button {
+      position: absolute;
+      top: 1em;
+      right: 1em;
+      width: 40px;
+      height: 40px;
+      background-color: #6a0f0f;
+      border: none;
+      border-radius: 5px;
       cursor: pointer;
-      transition: transform 0.2s;
+      z-index: 20;
     }
-    .gallery img:hover {
-      transform: scale(1.05);
+
+    .menu-button span {
+      display: block;
+      width: 22px;
+      height: 3px;
+      margin: 5px auto;
+      background-color: white;
     }
-    .modal {
+
+    .menu-overlay-wrapper {
       display: none;
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.85);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 15;
     }
-    .modal img {
-      max-width: 90%;
-      max-height: 90%;
+
+    .menu-overlay-wrapper.open {
+      display: block;
+    }
+
+    .menu-overlay {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 100%;
+      background-color: #111;
+      padding-top: 60px;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    }
+
+    .menu-overlay a {
+      display: block;
+      padding: 1em;
+      color: white;
+      text-decoration: none;
+      border-bottom: 1px solid #333;
+    }
+
+    .menu-overlay a:hover {
+      background-color: #6a0f0f;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h1>Galerie</h1>
-  <div class="gallery" id="gallery"></div>
 
-  <div class="modal" id="modal">
-    <img id="modal-img" src="" alt="Vorschau" />
+  <button class="menu-button" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="menu-overlay-wrapper" id="menuWrapper" onclick="closeMenu()">
+    <div class="menu-overlay" onclick="event.stopPropagation();">
+      <button class="close-btn" onclick="toggleMenu()">×</button>
+      <a href="index.html">Homepage</a>
+      <a href="gallery.html">Galerie</a>
+      <a href="viewer.html">Mosaik</a>
+      <a href="participate.html">Mitmachen</a>
+    </div>
+  </div>
+
+  <h1>Galerie</h1>
+  <div class="gallery">
+    <!-- Beispielbilder -->
+    <div class="gallery-item"><img src="tiles/tile_001.jpg" alt="Bild 1"></div>
+    <div class="gallery-item"><img src="tiles/tile_002.jpg" alt="Bild 2"></div>
+    <div class="gallery-item"><img src="tiles/tile_003.jpg" alt="Bild 3"></div>
+    <!-- Weitere Einträge folgen oder per JS automatisieren -->
   </div>
 
   <script>
-    const tilesFolder = 'tiles/';
-    const totalImages = 0; // Aktuelle Anzahl deiner Bilder im tiles-Ordner
-    const gallery = document.getElementById('gallery');
-    const modal = document.getElementById('modal');
-    const modalImg = document.getElementById('modal-img');
-
-    for (let i = 0; i < totalImages; i++) {
-      const img = document.createElement('img');
-      img.src = `${tilesFolder}tile_${i}.jpg`;
-      img.alt = `tile_${i}`;
-      img.onclick = () => {
-        modal.style.display = 'flex';
-        modalImg.src = img.src;
-      };
-      gallery.appendChild(img);
+    function toggleMenu() {
+      document.getElementById('menuWrapper').classList.toggle('open');
     }
 
-    modal.onclick = () => {
-      modal.style.display = 'none';
-    };
+    function closeMenu() {
+      document.getElementById('menuWrapper').classList.remove('open');
+    }
   </script>
 </body>
 </html>
