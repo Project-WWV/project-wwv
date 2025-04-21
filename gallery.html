@@ -10,13 +10,30 @@
       color: white;
       font-family: sans-serif;
       margin: 0;
-      padding: 2em;
+      padding: 1em;
       text-align: center;
     }
 
     h1 {
       font-size: 2em;
       margin-bottom: 1em;
+    }
+
+    .preview {
+      display: none;
+      margin-bottom: 2em;
+    }
+
+    .preview img {
+      max-width: 100%;
+      max-height: 60vh;
+      border-radius: 10px;
+    }
+
+    .info {
+      margin-top: 1em;
+      font-size: 1em;
+      color: #ccc;
     }
 
     .gallery {
@@ -32,6 +49,7 @@
       background: #222;
       border-radius: 6px;
       overflow: hidden;
+      cursor: pointer;
     }
 
     .gallery-item img {
@@ -39,119 +57,54 @@
       height: 100%;
       object-fit: cover;
     }
-
-    /* Menü-Stil wie auf anderen Seiten */
-    .menu-button {
-      position: absolute;
-      top: 1em;
-      right: 1em;
-      width: 40px;
-      height: 40px;
-      background-color: #6a0f0f;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      z-index: 20;
-    }
-
-    .menu-button span {
-      display: block;
-      width: 22px;
-      height: 3px;
-      margin: 5px auto;
-      background-color: white;
-    }
-
-    .menu-overlay-wrapper {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 15;
-    }
-
-    .menu-overlay-wrapper.open {
-      display: block;
-    }
-
-    .menu-overlay {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 200px;
-      height: 100%;
-      background-color: #111;
-      padding-top: 60px;
-      box-shadow: -2px 0 5px rgba(0,0,0,0.5);
-    }
-
-    .menu-overlay a {
-      display: block;
-      padding: 1em;
-      color: white;
-      text-decoration: none;
-      border-bottom: 1px solid #333;
-    }
-
-    .menu-overlay a:hover {
-      background-color: #6a0f0f;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 24px;
-      color: white;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
 
-  <button class="menu-button" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
-  </button>
+  <h1>Galerie</h1>
 
-  <div class="menu-overlay-wrapper" id="menuWrapper" onclick="closeMenu()">
-    <div class="menu-overlay" onclick="event.stopPropagation();">
-      <button class="close-btn" onclick="toggleMenu()">×</button>
-      <a href="index.html">Homepage</a>
-      <a href="gallery.html">Galerie</a>
-      <a href="viewer.html">Mosaik</a>
-      <a href="participate.html">Mitmachen</a>
+  <div class="preview" id="previewBox">
+    <img id="previewImage" src="" alt="Vorschau">
+    <div class="info">
+      <p><strong>Name:</strong> –</p>
+      <p><strong>Age:</strong> –</p>
+      <p><strong>Country:</strong> –</p>
+      <p><strong>Message:</strong> –</p>
     </div>
   </div>
 
-  <h1>Galerie</h1>
   <div class="gallery" id="gallery"></div>
 
   <script>
-    function toggleMenu() {
-      document.getElementById('menuWrapper').classList.toggle('open');
-    }
-
-    function closeMenu() {
-      document.getElementById('menuWrapper').classList.remove('open');
-    }
-
     const gallery = document.getElementById("gallery");
-    const totalImages = 150; // <-- hier anpassen, je nach tatsächlicher Anzahl
+    const previewBox = document.getElementById("previewBox");
+    const previewImage = document.getElementById("previewImage");
+
+    const totalImages = 150; // ggf. anpassen
 
     for (let i = 0; i < totalImages; i++) {
       const img = new Image();
       img.src = `tiles/tile_${i}.jpg`;
       img.alt = `tile_${i}`;
-      img.onerror = () => img.parentElement.remove(); // entfernt Platzhalter, wenn Bild fehlt
+      img.onerror = () => img.parentElement.remove();
 
       const wrapper = document.createElement("div");
       wrapper.className = "gallery-item";
       wrapper.appendChild(img);
+
+      wrapper.onclick = () => {
+        previewBox.style.display = "block";
+        previewImage.src = img.src;
+
+        // Platzhalter anzeigen (kann später durch JSON ersetzt werden)
+        previewBox.querySelector(".info").innerHTML = `
+          <p><strong>Name:</strong> –</p>
+          <p><strong>Age:</strong> –</p>
+          <p><strong>Country:</strong> –</p>
+          <p><strong>Message:</strong> –</p>
+        `;
+      };
+
       gallery.appendChild(wrapper);
     }
   </script>
