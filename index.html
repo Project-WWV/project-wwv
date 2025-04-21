@@ -35,7 +35,6 @@
       border-radius: 5px;
     }
 
-    /* Hamburger button */
     .menu-button {
       position: absolute;
       top: 1em;
@@ -46,6 +45,7 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      z-index: 20;
     }
 
     .menu-button span {
@@ -56,22 +56,30 @@
       background-color: white;
     }
 
-    /* Overlay menu */
-    .menu-overlay {
+    .menu-overlay-wrapper {
       display: none;
       position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 15;
+    }
+
+    .menu-overlay-wrapper.open {
+      display: block;
+    }
+
+    .menu-overlay {
+      position: absolute;
       top: 0;
       right: 0;
       width: 200px;
       height: 100%;
       background-color: #111;
-      z-index: 10;
       padding-top: 60px;
       box-shadow: -2px 0 5px rgba(0,0,0,0.5);
-    }
-
-    .menu-overlay.open {
-      display: block;
     }
 
     .menu-overlay a {
@@ -106,12 +114,14 @@
     <span></span>
   </button>
 
-  <div class="menu-overlay" id="menu">
-    <button class="close-btn" onclick="toggleMenu()">×</button>
-    <a href="index.html">Homepage</a>
-    <a href="gallery.html">Galerie</a>
-    <a href="viewer.html">Mosaik</a>
-    <a href="participate.html">Mitmachen</a>
+  <div class="menu-overlay-wrapper" id="menuWrapper" onclick="closeMenu()">
+    <div class="menu-overlay" onclick="event.stopPropagation();">
+      <button class="close-btn" onclick="toggleMenu()">×</button>
+      <a href="index.html">Homepage</a>
+      <a href="gallery.html">Galerie</a>
+      <a href="viewer.html">Mosaik</a>
+      <a href="participate.html">Mitmachen</a>
+    </div>
   </div>
 
   <h1>World Wide Vulva</h1>
@@ -125,7 +135,11 @@
 
   <script>
     function toggleMenu() {
-      document.getElementById('menu').classList.toggle('open');
+      document.getElementById('menuWrapper').classList.toggle('open');
+    }
+
+    function closeMenu() {
+      document.getElementById('menuWrapper').classList.remove('open');
     }
   </script>
 </body>
